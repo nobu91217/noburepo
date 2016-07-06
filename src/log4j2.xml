@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="off">
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%msg%n"/>
+    </Console>
+    <File name="fileAppender" fileName="test.log">
+      <PatternLayout>
+	<pattern>%msg%n</pattern>
+      </PatternLayout>
+    </File>
+  </appenders>
+  <loggers>
+     <root level="info">
+      <appender-ref ref="Console"/>
+      <appender-ref ref="fileAppender"/> 
+    </root>
+   </loggers>
+</configuration>
