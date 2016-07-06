@@ -46,7 +46,7 @@ public class DeleteServlet extends HttpServlet {
 				ps.close();
 				db.close();
 			} catch (SQLException ex) {
-				// inogre
+		
 			}
 		}
 	}
