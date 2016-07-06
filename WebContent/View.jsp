@@ -16,7 +16,7 @@ ResultSet rs = ps.executeQuery();
 <body>
 <table border="1">
 <tr>
-	<th>ユーザーID</th><th>パスワード</th><th>名前</th>
+	<th>ユーザーID</th><th>パスワード</th>
 </tr>
 <% while(rs.next()) { %>
 	<tr>
