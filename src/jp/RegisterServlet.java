@@ -29,9 +29,10 @@ public class RegisterServlet extends HttpServlet {
 		Context context = new InitialContext();
 		DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/nobuweb");
 		db = (Connection) ds.getConnection();
-		ps = db.prepareStatement("INSERT INTO user_info(user_id,password) VALUES(?,?)");
+		ps = db.prepareStatement("INSERT INTO user_info(user_id,password,name) VALUES(?,?,?)");
 		ps.setString(1, request.getParameter("id"));
 		ps.setString(2, request.getParameter("pass"));
+		ps.setString(3, request.getParameter("name"));
 		
 		ps.executeUpdate();
 		

@@ -18,6 +18,11 @@
 	</label>
 </div>
 <div>
+	<label>名前：<br />
+		<input type="text" name="name" size="15" />
+	</label>
+</div>
+<div>
 	<input type="submit" value="登録" />
 </div>
 </form>

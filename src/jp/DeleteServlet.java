@@ -27,29 +27,17 @@ public class DeleteServlet extends HttpServlet {
 		PreparedStatement ps = null;
 
 		try {
-			if (request.getParameter("delete") != null) {
 				Context context = new InitialContext();
 				DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/nobuweb");
 				db = (Connection) ds.getConnection();
-				ps = db.prepareStatement("DELETE FROM user_info where user_id = ? and password = ? ");
+				ps = db.prepareStatement("DELETE FROM user_info where user_id = ? and password = ?");
 				ps.setString(1, request.getParameter("id"));
 				ps.setString(2, request.getParameter("password"));
 
 				ps.executeUpdate();
 
 				getServletContext().getRequestDispatcher("/View.jsp").forward(request, response);
-			} else {
-				Context context = new InitialContext();
-				DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/nobuweb");
-				db = (Connection) ds.getConnection();
-				ps = db.prepareStatement("UPDATE user_info set user_id=?, password=?");
-				ps.setString(1, request.getParameter("user_id"));
-				ps.setString(2, request.getParameter("password"));
-
-				ps.executeUpdate();
-
-				getServletContext().getRequestDispatcher("/View.jsp").forward(request, response);
-			}
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
