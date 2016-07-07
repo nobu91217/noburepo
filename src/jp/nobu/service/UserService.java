@@ -16,7 +16,7 @@ import jp.nobu.util.DbUtil;
  */
 public class UserService extends GenericSearvice {
 
-	public static UserService INSTANCE = new UserService();
+	public static final UserService INSTANCE = new UserService();
 
 	private UserService() {}
 
