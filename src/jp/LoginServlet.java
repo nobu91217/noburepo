@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
 		
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");
+		request.setAttribute("id",id);
 		
 		try{
 			
@@ -49,10 +50,10 @@ public class LoginServlet extends HttpServlet {
 			
 			if(rs.next()) {
 				getServletContext().getRequestDispatcher("/loginok.jsp").forward(request, response);
-				//���݂���ꍇ�̏����@������ʂɑJ��
+				//存在する場合の処理　成功画面に遷移
 			} else {
 				getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-				//���݂��Ȃ��ꍇ�̏��� ���O�C����ʂɑJ��
+				//存在しない場合の処理 ログイン画面に遷移
 			}	
 
 		
