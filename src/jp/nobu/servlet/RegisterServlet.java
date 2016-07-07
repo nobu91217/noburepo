@@ -1,4 +1,4 @@
-package jp;
+package jp.nobu.servlet;
 
 import java.io.IOException;
 import java.sql.Connection;
