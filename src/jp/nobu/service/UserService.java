@@ -20,7 +20,8 @@ public class UserService extends GenericSearvice {
 
 	public static final UserService INSTANCE = new UserService();
 
-	private UserService() {}
+	private UserService() {
+	}
 
 	/**
 	 * ログインする。
@@ -108,7 +109,36 @@ public class UserService extends GenericSearvice {
 	 * @return 該当するユーザが存在し、正しく変更できればtrueを返す。存在しない場合falseを返す。
 	 */
 	public boolean updateUserName(String userId, String userName) {
-		return false;
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = getConnection();
+			ps = con.prepareStatement("UPDATE user_info SET user_id=?, name=?");
+			ps.setString(1, userId);
+			ps.setString(2, userName);
+
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			throw NobuSystemException.wrap("ユーザーネーム更新エラー", e);
+
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (ps != null) ps.close();
+				if (con != null)con.close();
+			} catch (SQLException ex) {
+				// inogre
+			}
+		}
 	}
 
 	/**
@@ -119,7 +149,33 @@ public class UserService extends GenericSearvice {
 	 * @return 該当するユーザが存在し、正しく削除できればtrueを返す。存在しない場合falseを返す。
 	 */
 	public boolean deleteUserByUserId(String userId) {
-		return false;
-	}
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
+		try {
+
+			con = getConnection();
+			ps = con.prepareStatement("DELETE FROM user_info where user_id = ?");
+			ps.setString(1, userId);
+
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			throw NobuSystemException.wrap("ユーザー情報削除エラー", e);
+
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (ps != null) ps.close();
+				if (con != null)con.close();
+			} catch (SQLException ex) {
+				// inogre
+			}
+		}
+	}
 }

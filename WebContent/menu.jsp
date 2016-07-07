@@ -6,7 +6,7 @@
 <title>メニュー</title>
 </head>
 <body>
-ようこそ<%= request.getAttribute("id") %>さん。
+ようこそ<%= request.getAttribute("users") %>さん。
 <% out.print("<p>ログインできました！</p>"); %>
 
 <div>
