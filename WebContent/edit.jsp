@@ -28,11 +28,12 @@ if(rs.next()) {
 </div>
 
 <div>
-	<label>パスワード:<br />
-		<input type="text" name="password" size="50" maxlength="16" value="<%=rs.getString("password") %>"/>
+	<label>名前:<br />
+		<input type="text" name="name" size="50" maxlength="16" value="<%=rs.getString("name") %>"/>
 	</label>
 </div>
 <div>
+		<input type="submit" value="更新"　/>
 		<input type="submit" name="delete" value="削除"
 			onclick="return confirm('本当に削除しても良いですか？')" />
 </div>

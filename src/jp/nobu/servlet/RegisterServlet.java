@@ -19,6 +19,11 @@ import javax.sql.DataSource;
  */
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8792319632516505060L;
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	Connection db = null;
 	PreparedStatement ps =null;
@@ -36,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
 		
 		ps.executeUpdate();
 		
-		getServletContext().getRequestDispatcher("/View.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
 
 	
 	} catch (Exception e) {

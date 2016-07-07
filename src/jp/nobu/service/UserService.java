@@ -121,12 +121,9 @@ public class UserService extends GenericSearvice {
 			ps.setString(1, userId);
 			ps.setString(2, userName);
 
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				return true;
-			} else {
-				return false;
-			}
+			ps.executeUpdate();
+			
+			return true;
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザーネーム更新エラー", e);
 
@@ -138,7 +135,9 @@ public class UserService extends GenericSearvice {
 			} catch (SQLException ex) {
 				// inogre
 			}
+		
 		}
+
 	}
 
 	/**
@@ -159,12 +158,10 @@ public class UserService extends GenericSearvice {
 			ps = con.prepareStatement("DELETE FROM user_info where user_id = ?");
 			ps.setString(1, userId);
 
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				return true;
-			} else {
-				return false;
-			}
+			ps.executeUpdate();
+			
+			return true;
+			
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザー情報削除エラー", e);
 
@@ -177,5 +174,7 @@ public class UserService extends GenericSearvice {
 				// inogre
 			}
 		}
+	
 	}
+	
 }
