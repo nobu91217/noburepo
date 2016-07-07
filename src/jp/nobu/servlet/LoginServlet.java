@@ -1,4 +1,4 @@
-package jp;
+package jp.nobu.servlet;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		if (UserService.INSTANCE.login(request.getParameter("id"), request.getParameter("pass"))) {
-			getServletContext().getRequestDispatcher("/loginok.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/menu.jsp").forward(request, response);
 			// 存在する場合の処理 成功画面に遷移
 		} else {
 			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);

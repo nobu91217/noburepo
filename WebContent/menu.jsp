@@ -3,10 +3,17 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>ログイン成功</title>
+<title>メニュー</title>
 </head>
 <body>
 ようこそ<%= request.getAttribute("id") %>さん。
 <% out.print("<p>ログインできました！</p>"); %>
+
+<div>
+
+<a href="UserList">ユーザー一覧</a>
+
+</div>
+
 </body>
 </html>
