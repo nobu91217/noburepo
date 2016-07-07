@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 			
 		
 			db = DbUtil.getConnection();
-			ps = db.prepareStatement("SELECT * FROM user_info where id = ? and password = ? ");
+			ps = db.prepareStatement("SELECT * FROM user_info where user_id = ? and password = ?");
 			ps.setString(1, id);
 			ps.setString(2, pass);
 			
@@ -63,6 +63,7 @@ public class LoginServlet extends HttpServlet {
 			try{
 				rs.close();
 				ps.close();
+				db.close();
 			}catch(SQLException ex) {
 				//inogre
 			}
