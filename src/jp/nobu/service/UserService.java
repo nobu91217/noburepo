@@ -90,9 +90,12 @@ public class UserService extends GenericSearvice {
 			throw NobuSystemException.wrap("ユーザー一覧取得エラー", e);
 		} finally {
 			try {
-				if (rs != null)rs.close();
-				if (ps != null)ps.close();
-				if (con != null)con.close();
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
@@ -112,25 +115,23 @@ public class UserService extends GenericSearvice {
 
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
 
 		try {
-			
+
 			con = getConnection();
 			ps = con.prepareStatement("UPDATE user_info SET name=? where user_id=?");
 			ps.setString(1, userName);
 			ps.setString(2, userId);
 
 			ps.executeUpdate();
-			
-			return true;
+
+			int count = ps.executeUpdate();
+			return count == 1;
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザーネーム更新エラー", e);
 
 		} finally {
 			try {
-				if (rs != null)rs.close();
 				if (ps != null)ps.close();
 				if (con != null)con.close();
 			} catch (SQLException ex) {
@@ -149,9 +150,7 @@ public class UserService extends GenericSearvice {
 	public boolean deleteUserByUserId(String userId) {
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-	
+
 		try {
 
 			con = getConnection();
@@ -160,13 +159,12 @@ public class UserService extends GenericSearvice {
 
 			int count = ps.executeUpdate();
 			return count == 1;
-			
+
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザー情報削除エラー", e);
 
 		} finally {
 			try {
-				if (rs != null)rs.close();
 				if (ps != null)ps.close();
 				if (con != null)con.close();
 			} catch (SQLException ex) {
@@ -174,18 +172,23 @@ public class UserService extends GenericSearvice {
 			}
 
 		}
-		
+
 	}
 
 	/**
-	 * ユーザを登録する。
+	 * ユーザ情報を登録する。
 	 * 
-	 * 
+	 * @param userId
+	 *            データベースのuser_idカラムへ登録するID
+	 * @param userPass
+	 *            データベースのpasswordカラムへ登録するパスワード
+	 * @param userName
+	 *            データベースのnameカラムへ登録する名前
+	 * @return データベースへの登録に成功すればtrueを返す。失敗した場合はfalseを返す。
 	 */
 	public boolean registerUserInfo(String userId, String userPass, String userName) {
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
 
 		try {
 
@@ -196,20 +199,17 @@ public class UserService extends GenericSearvice {
 			ps.setString(3, userName);
 
 			ps.executeUpdate();
-			
-			return false;
+
+			int count = ps.executeUpdate();
+			return count == 1;
 
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザ情報登録エラー", e);
 
 		} finally {
 			try {
-				if (rs != null)
-					rs.close();
-				if (ps != null)
-					ps.close();
-				if (con != null)
-					con.close();
+				if (ps != null)ps.close();
+				if (con != null)con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
