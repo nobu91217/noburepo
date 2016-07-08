@@ -17,7 +17,7 @@
 		<td><%= user.getUserId() %></td>
 		<td><%= user.getUserName() %></td>	
 		<td>
-			<a href="edit.jsp?id=<%=user.getUserId()  %>">削除</a>
+			<a href="edit.jsp?id=<%=user.getUserId()  %>">編集</a>
 		</td>
 	</tr>
 <%

@@ -117,10 +117,10 @@ public class UserService extends GenericSearvice {
 		try {
 
 			con = getConnection();
-			ps = con.prepareStatement("UPDATE user_info SET user_id=?, name=?");
-			ps.setString(1, userId);
-			ps.setString(2, userName);
-
+			ps = con.prepareStatement("UPDATE user_info SET name=? where user_id=?");
+			ps.setString(1, userName);
+			ps.setString(2,userId);
+			
 			ps.executeUpdate();
 			
 			return true;
@@ -135,9 +135,7 @@ public class UserService extends GenericSearvice {
 			} catch (SQLException ex) {
 				// inogre
 			}
-		
 		}
-
 	}
 
 	/**
@@ -173,8 +171,43 @@ public class UserService extends GenericSearvice {
 			} catch (SQLException ex) {
 				// inogre
 			}
+			
 		}
-	
+		
 	}
 	
+	/**
+	 * ユーザを登録する。
+	 * 
+	 * 
+	 */
+	public boolean registerUserInfo(String userId, String userPass, String userName) {		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = getConnection();
+			ps = con.prepareStatement("INSERT INTO user_info(user_id,password,name) VALUES(?,?,?)");
+			ps.setString(1, userName);
+			ps.setString(2,userPass);
+			ps.setString(3,userName);
+			
+			ps.executeUpdate();
+			
+			return true;
+		} catch (Exception e) {
+			throw NobuSystemException.wrap("ユーザ情報登録エラー", e);
+
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (ps != null) ps.close();
+				if (con != null)con.close();
+			} catch (SQLException ex) {
+				// inogre
+			}
+		}
+	}
 }

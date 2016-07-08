@@ -20,8 +20,8 @@ if(rs.next()) {
 <form method="POST" action="/nobuweb/DeleteServlet">
 <div>
 	<label>ユーザーID:<br />
-		<input type="hidden" name="id"value="<%=rs.getString("user_id") %>"/>
-		<input type="text" name="user_id" size="50" maxlength="16" value="<%=rs.getString("user_id") %>"/>
+		
+		<input type="text" name="user_id" size="50" maxlength="225" value="<%=rs.getString("user_id") %>"/>
 		
 		
 	</label>
@@ -33,7 +33,7 @@ if(rs.next()) {
 	</label>
 </div>
 <div>
-		<input type="submit" value="更新"　/>
+		<input type="submit" value="更新" />
 		<input type="submit" name="delete" value="削除"
 			onclick="return confirm('本当に削除しても良いですか？')" />
 </div>
