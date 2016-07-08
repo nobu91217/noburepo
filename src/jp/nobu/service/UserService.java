@@ -51,9 +51,9 @@ public class UserService extends GenericSearvice {
 			throw NobuSystemException.wrap("認証実行エラー", e);
 		} finally {
 			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (con != null) con.close();
+				if (rs != null)rs.close();
+				if (ps != null)ps.close();
+				if (con != null)con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
@@ -90,9 +90,9 @@ public class UserService extends GenericSearvice {
 			throw NobuSystemException.wrap("ユーザー一覧取得エラー", e);
 		} finally {
 			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (con != null) con.close();
+				if (rs != null)rs.close();
+				if (ps != null)ps.close();
+				if (con != null)con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
@@ -119,18 +119,18 @@ public class UserService extends GenericSearvice {
 			con = getConnection();
 			ps = con.prepareStatement("UPDATE user_info SET name=? where user_id=?");
 			ps.setString(1, userName);
-			ps.setString(2,userId);
-			
+			ps.setString(2, userId);
+
 			ps.executeUpdate();
-			
+
 			return true;
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザーネーム更新エラー", e);
 
 		} finally {
 			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
+				if (rs != null)rs.close();
+				if (ps != null)ps.close();
 				if (con != null)con.close();
 			} catch (SQLException ex) {
 				// inogre
@@ -149,7 +149,7 @@ public class UserService extends GenericSearvice {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-
+	
 		try {
 
 			con = getConnection();
@@ -157,31 +157,29 @@ public class UserService extends GenericSearvice {
 			ps.setString(1, userId);
 
 			ps.executeUpdate();
-			
-			return true;
-			
+
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザー情報削除エラー", e);
 
 		} finally {
 			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
+				if (rs != null)rs.close();
+				if (ps != null)ps.close();
 				if (con != null)con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
-			
+
 		}
-		
+		return false;
 	}
-	
+
 	/**
 	 * ユーザを登録する。
 	 * 
 	 * 
 	 */
-	public boolean registerUserInfo(String userId, String userPass, String userName) {		
+	public boolean registerUserInfo(String userId, String userPass, String userName) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -191,23 +189,26 @@ public class UserService extends GenericSearvice {
 			con = getConnection();
 			ps = con.prepareStatement("INSERT INTO user_info(user_id,password,name) VALUES(?,?,?)");
 			ps.setString(1, userName);
-			ps.setString(2,userPass);
-			ps.setString(3,userName);
-			
+			ps.setString(2, userPass);
+			ps.setString(3, userName);
+
 			ps.executeUpdate();
-			
-			return true;
+
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザ情報登録エラー", e);
 
 		} finally {
 			try {
-				if (rs != null) rs.close();
-				if (ps != null) ps.close();
-				if (con != null)con.close();
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
 		}
+		return false;
 	}
 }

@@ -17,7 +17,7 @@ if(rs.next()) {
 <title>ユーザー情報画面</title>
 </head>
 <body>
-<form method="POST" action="/nobuweb/DeleteServlet">
+<form method="POST" action="/nobuweb/EditServlet">
 <div>
 	<label>ユーザーID:<br />
 		
