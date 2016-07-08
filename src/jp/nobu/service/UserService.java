@@ -150,7 +150,7 @@ public class UserService extends GenericSearvice {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int s;
+		
 	
 		try {
 
@@ -158,13 +158,9 @@ public class UserService extends GenericSearvice {
 			ps = con.prepareStatement("DELETE FROM user_info where user_id = ?");
 			ps.setString(1, userId);
 
-			s = ps.executeUpdate();
+			int count = ps.executeUpdate();
+			return count == 1;
 			
-			if(s==1) {
-	            return true;
-			} else {
-	            return false;
-			}
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザー情報削除エラー", e);
 
