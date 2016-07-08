@@ -11,7 +11,7 @@
 
 <div>
 
-<a href="UserList">ユーザー一覧</a>
+<a href="UserServlet">ユーザー一覧</a>
 
 </div>
 

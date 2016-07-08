@@ -6,7 +6,7 @@
 <title>情報登録画面</title>
 </head>
 <body>
-<form method="POST" action="/nobuweb/RegisterServlet">
+<form method="POST" action="/nobuweb/UserServlet">
 <div>
 	<label>ID：<br />
 		<input type="text" name="id" size="15" />
@@ -23,7 +23,7 @@
 	</label>
 </div>
 <div>
-	<input type="submit" value="登録" />
+	<input type="submit" name="register" value="登録" />
 </div>
 </form>
 </body>

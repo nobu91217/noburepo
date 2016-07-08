@@ -123,8 +123,6 @@ public class UserService extends GenericSearvice {
 			ps.setString(1, userName);
 			ps.setString(2, userId);
 
-			ps.executeUpdate();
-
 			int count = ps.executeUpdate();
 			return count == 1;
 		} catch (Exception e) {
@@ -184,7 +182,7 @@ public class UserService extends GenericSearvice {
 	 *            データベースのpasswordカラムへ登録するパスワード
 	 * @param userName
 	 *            データベースのnameカラムへ登録する名前
-	 * @return データベースへの登録に成功すればtrueを返す。失敗した場合はfalseを返す。
+	 * @return　データベースへの登録に成功すればtrueを返す。失敗した場合はfalseを返す。
 	 */
 	public boolean registerUserInfo(String userId, String userPass, String userName) {
 		Connection con = null;
@@ -197,8 +195,6 @@ public class UserService extends GenericSearvice {
 			ps.setString(1, userName);
 			ps.setString(2, userPass);
 			ps.setString(3, userName);
-
-			ps.executeUpdate();
 
 			int count = ps.executeUpdate();
 			return count == 1;
