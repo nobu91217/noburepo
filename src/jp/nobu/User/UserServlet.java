@@ -40,8 +40,9 @@ public class UserServlet extends HttpServlet {
 		if (request.getParameter("register") != null) {
 			UserService.INSTANCE.registerUserInfo(request.getParameter("id"), request.getParameter("pass"),
 					request.getParameter("name"));
-
+			
 			getServletContext().getRequestDispatcher("/register.jsp");
+			
 		}
 		if (request.getParameter("delete") != null) {
 			UserService.INSTANCE.deleteUserByUserId(request.getParameter("user_id"));

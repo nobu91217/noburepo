@@ -196,8 +196,10 @@ public class UserService extends GenericSearvice {
 			ps.setString(2, userPass);
 			ps.setString(3, userName);
 
+
 			int count = ps.executeUpdate();
 			return count == 1;
+
 
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザ情報登録エラー", e);
