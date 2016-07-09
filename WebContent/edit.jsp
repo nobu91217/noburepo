@@ -13,18 +13,19 @@ if(rs.next()) {
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.errorMsg{color:red;}
+</style>
 <meta charset="UTF-8" />
 <title>ユーザー情報画面</title>
 </head>
 <body>
 <form method="POST" action="/nobuweb/UserServlet">
 <div>
-	<label>ユーザーID:<br />
+	<label for="user_id"> id </label><br/>
 		
 		<input type="text" name="user_id" size="50" maxlength="225" value="<%=rs.getString("user_id") %>"/>
-		
-		
-	</label>
+		<span class="errorMsg"><%=request.getAttribute("idErrorMsg") %>></span>
 </div>
 
 <div>
