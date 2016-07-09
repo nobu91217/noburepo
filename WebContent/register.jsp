@@ -5,12 +5,14 @@
 <meta charset="UTF-8" />
 <title>情報登録画面</title>
 </head>
+<style>
+.errorMsg{color:red;}
+</style>
 <body>
 <form method="POST" action="/nobuweb/UserServlet">
 <div>
-	<label>ID：<br />
-		<input type="text" name="id" size="15" />
-	</label>
+	<label for="id"> id </label><br/>
+	<input id="id" type="text" name="id" size="15" /><span class="errorMsg"><%=request.getAttribute("idErrorMsg") %>></span>
 </div>
 <div>
 	<label>パスワード：<br />
