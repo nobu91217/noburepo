@@ -21,8 +21,9 @@ public class LoginServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 8118821188723764546L;
 
-	private void putErrorMessage(HttpServletRequest request, String key, String message) {
+	private boolean putErrorMessage(HttpServletRequest request, String key, String message) {
 		request.setAttribute(key + "ErrorMsg", message);
+		return true;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,24 +35,21 @@ public class LoginServlet extends HttpServlet {
 		// 入力チェック
 		boolean hasError = false;
 		if (Validation.isBlank(id))
-			putErrorMessage(request, "id", "入力してください。");
+			hasError = putErrorMessage(request, "id", "入力してください。");
 		if (Validation.isBlank(pass))
-			putErrorMessage(request, "pass", "入力してください。");
+			hasError = putErrorMessage(request, "pass", "入力してください。");
 
-		if (hasError == false) {
-
+		if (hasError) {
 			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-
+			return;
+		} 
+		
+		if (UserService.INSTANCE.login(request.getParameter("id"), request.getParameter("pass"))) {
+			getServletContext().getRequestDispatcher("/menu.jsp").forward(request, response);
+			// 存在する場合の処理 成功画面に遷移
 		} else {
-			if (UserService.INSTANCE.login(request.getParameter("id"), request.getParameter("pass"))) {
-				getServletContext().getRequestDispatcher("/menu.jsp").forward(request, response);
-				// 存在する場合の処理 成功画面に遷移
-			} else {
-				getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-				// 存在しない場合の処理 ログイン画面に遷移
-
-			}
-
+			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+			// 存在しない場合の処理 ログイン画面に遷移
 		}
 
 	}

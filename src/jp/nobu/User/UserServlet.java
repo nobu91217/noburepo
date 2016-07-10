@@ -26,14 +26,20 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		List<User> users = UserService.INSTANCE.getUsers();
 		request.setAttribute("users", users);
 		getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
 	}
 
-	private void putErrorMessage(HttpServletRequest request, String key, String message) {
+	private boolean putErrorMessage(HttpServletRequest request, String key, String message) {
 		request.setAttribute(key + "ErrorMsg", message);
+		return true;
+	}
+	
+	private void forwardUserList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<User> users = UserService.INSTANCE.getUsers();
+		request.setAttribute("users", users);
+		getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
 	}
 
 	/**
@@ -51,54 +57,56 @@ public class UserServlet extends HttpServlet {
 			// 入力チェック
 			boolean hasError = false;
 			if (Validation.isBlank(id))
-				putErrorMessage(request, "id", "入力してください。");
+				hasError = putErrorMessage(request, "id", "入力してください。");
 			if (Validation.isBlank(pass))
-				putErrorMessage(request, "password", "入力してください。");
+				hasError = putErrorMessage(request, "password", "入力してください。");
 			if (Validation.isBlank(name))
-				putErrorMessage(request, "name", "入力してください。");
+				hasError = putErrorMessage(request, "name", "入力してください。");
 
-			if (hasError == false) {
+			if (hasError) {
 				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
-			} else {
-				UserService.INSTANCE.registerUserInfo(id, request.getParameter("pass"), request.getParameter("name"));
-			} 
-				getServletContext().getRequestDispatcher("/userList.jsp");
+				return;
+			}
+			
+			forwardUserList(request,response);
 				
-			}
-
-		
-
-		if (request.getParameter("delete") != null) {
+		} else if (request.getParameter("delete") != null) {
 			String id = request.getParameter("user_id");
 
 			// 入力チェック
 			boolean hasError = false;
-			if (Validation.isBlank(id))
-				putErrorMessage(request, "id", "入力してください。");
-
-			if (hasError == false) {
-				UserService.INSTANCE.deleteUserByUserId(request.getParameter("user_id"));
-				List<User> users = UserService.INSTANCE.getUsers();
-				request.setAttribute("users", users);
+			if (Validation.isBlank(id)) {
+				hasError = putErrorMessage(request, "id", "入力してください。");
 			}
-			getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
+
+			if (hasError) {
+				forwardUserList(request,response);
+				return;
+			}
+			
+			UserService.INSTANCE.deleteUserByUserId(request.getParameter("user_id"));
+			forwardUserList(request,response);
 			// 存在する場合の処理 成功画面に遷移
-		}
-		if (request.getParameter("update") != null) {
+			
+		} else if (request.getParameter("update") != null) {
 			String id = request.getParameter("user_id");
+			String name = request.getParameter("name");
 
 			// 入力チェック
 			boolean hasError = false;
-			if (Validation.isBlank(id))
-				putErrorMessage(request, "id", "入力してください。");
-
-			if (hasError == false) {
-				UserService.INSTANCE.updateUserName(request.getParameter("user_id"), request.getParameter("name"));
-				List<User> users = UserService.INSTANCE.getUsers();
-				request.setAttribute("users", users);
+			if (Validation.isBlank(id)) {
+				hasError = putErrorMessage(request, "id", "入力してください。");
 			}
-			getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
-		}
 
+			if (hasError) {
+				request.setAttribute("user_id", id);
+				request.setAttribute("name", name);
+				getServletContext().getRequestDispatcher("/edit.jsp").forward(request, response);
+				return;
+			}
+			
+			UserService.INSTANCE.updateUserName(request.getParameter("user_id"), name);
+			forwardUserList(request,response);	
+		}
 	}
 }
