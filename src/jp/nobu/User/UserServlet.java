@@ -42,21 +42,32 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		if (request.getParameter("register") != null) {
 			String id = request.getParameter("id");
+			String pass = request.getParameter("pass");
+			String name = request.getParameter("name");
 
 			// 入力チェック
 			boolean hasError = false;
 			if (Validation.isBlank(id))
 				putErrorMessage(request, "id", "入力してください。");
+			if (Validation.isBlank(pass))
+				putErrorMessage(request, "password", "入力してください。");
+			if (Validation.isBlank(name))
+				putErrorMessage(request, "name", "入力してください。");
 
 			if (hasError == false) {
+				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+			} else {
 				UserService.INSTANCE.registerUserInfo(id, request.getParameter("pass"), request.getParameter("name"));
+			} 
+				getServletContext().getRequestDispatcher("/userList.jsp");
+				
 			}
 
-			getServletContext().getRequestDispatcher("/register.jsp");
+		
 
-		}
 		if (request.getParameter("delete") != null) {
 			String id = request.getParameter("user_id");
 
@@ -72,7 +83,8 @@ public class UserServlet extends HttpServlet {
 			}
 			getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
 			// 存在する場合の処理 成功画面に遷移
-		} else {
+		}
+		if (request.getParameter("update") != null) {
 			String id = request.getParameter("user_id");
 
 			// 入力チェック

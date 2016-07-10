@@ -34,7 +34,7 @@ if(rs.next()) {
 	</label>
 </div>
 <div>
-		<input type="submit" value="更新" />
+		<input type="submit" name="update" value="更新" />
 		<input type="submit" name="delete" value="削除"
 			onclick="return confirm('本当に削除しても良いですか？')" />
 </div>

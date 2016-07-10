@@ -12,17 +12,15 @@
 <form method="POST" action="/nobuweb/UserServlet">
 <div>
 	<label for="id"> id </label><br/>
-	<input id="id" type="text" name="id" size="15" /><span class="errorMsg"><%=request.getAttribute("idErrorMsg") %>></span>
+	<input id="id" type="text" name="id" size="15" /><span class="errorMsg"><%=request.getAttribute("idErrorMsg") %></span>
 </div>
 <div>
-	<label>パスワード：<br />
-		<input type="password" name="pass" size="15" />
-	</label>
+	<label for="pass"> パスワード </label><br/>
+		<input type="password" name="pass" size="15" /><span class="errorMsg"><%=request.getAttribute("passwordErrorMsg") %></span>
 </div>
 <div>
-	<label>名前：<br />
-		<input type="text" name="name" size="15" />
-	</label>
+	<label for="name"> 名前 </label><br/>
+		<input type="text" name="name" size="15" /><span class="errorMsg"><%=request.getAttribute("nameErrorMsg") %></span>
 </div>
 <div>
 	<input type="submit" name="register" value="登録" />

@@ -29,23 +29,29 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String id = request.getParameter("id");
+		String pass = request.getParameter("pass");
 
 		// 入力チェック
 		boolean hasError = false;
 		if (Validation.isBlank(id))
 			putErrorMessage(request, "id", "入力してください。");
+		if (Validation.isBlank(pass))
+			putErrorMessage(request, "pass", "入力してください。");
 
 		if (hasError == false) {
 
+			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+
+		} else {
 			if (UserService.INSTANCE.login(request.getParameter("id"), request.getParameter("pass"))) {
 				getServletContext().getRequestDispatcher("/menu.jsp").forward(request, response);
 				// 存在する場合の処理 成功画面に遷移
 			} else {
 				getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
 				// 存在しない場合の処理 ログイン画面に遷移
+
 			}
 
-			// inogre
 		}
 
 	}
