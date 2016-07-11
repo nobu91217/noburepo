@@ -1,5 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" 
-	import="jp.nobu.domain.User" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
