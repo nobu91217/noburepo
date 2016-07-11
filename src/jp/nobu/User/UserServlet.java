@@ -89,7 +89,7 @@ public class UserServlet extends HttpServlet {
 			boolean ret = UserService.INSTANCE.deleteUserByUserId(request.getParameter("user_id"));
 			if(ret == false) {
 				putErrorMessage(request, "delete", "削除対象が見つかりませんでした。 id:"+id);
-				
+
 			}
 			
 			forwardUserList(request, response);
