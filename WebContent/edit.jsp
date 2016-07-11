@@ -1,14 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"
-	import="java.util.*, java.sql.*, javax.naming.*, javax.sql.*" %>
+	import="jp.nobu.servlet.SendInfoServlet" %>
 <%
 request.setCharacterEncoding("UTF-8");
-Context context = new InitialContext();
-DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/nobuweb");
-Connection db = ds.getConnection();
-PreparedStatement ps = db.prepareStatement("SELECT * FROM user_info where user_id=?");
-ps.setString(1, request.getParameter("id"));
-ResultSet rs = ps.executeQuery();
-if(rs.next()) {
 %>
 <!DOCTYPE html>
 <html>
@@ -23,12 +16,12 @@ if(rs.next()) {
 <form method="POST" action="/nobuweb/UserServlet">
 <div>
 	<label for="user_id"> id </label><br/>
-		<input type="text" name="user_id" size="50" maxlength="225" value="<%=rs.getString("user_id") %>"/><span class="errorMsg"><%=request.getAttribute("idErrorMsg") %></span>
+		<input type="text" name="user_id" size="50" maxlength="225" value="<%=request.getAttribute("id") %>"/><span class="errorMsg"><%=request.getAttribute("idErrorMsg") %></span>
 </div>
 
 <div>
 	<label for="name"> 名前 </label><br/>
-		<input type="text" name="name" size="50" maxlength="16" value="<%=rs.getString("name") %>"/><span class="errorMsg"><%=request.getAttribute("nameErrorMsg") %></span>
+		<input type="text" name="name" size="50" maxlength="16" value="<%=request.getAttribute("name") %>"/><span class="errorMsg"><%=request.getAttribute("nameErrorMsg") %></span>
 </div>
 <div>
 		<input type="submit" name="update" value="更新" />
@@ -38,6 +31,3 @@ if(rs.next()) {
 </form>
 </body>
 </html>
-<%
-}
-%>
