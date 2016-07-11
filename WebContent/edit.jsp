@@ -1,8 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"
-	import="jp.nobu.servlet.SendInfoServlet" %>
-<%
-request.setCharacterEncoding("UTF-8");
-%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.nobu.util.DbUtil;
+import jp.nobu.service.UserService;
 
 /**
  * Servlet implementation class SendServlet
@@ -20,38 +20,13 @@ public class SendInfoServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-
-			con = DbUtil.getConnection();
-			ps = con.prepareStatement("SELECT * FROM user_info where user_id=?");
-			ps.setString(1, request.getParameter("id"));
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
+		
+			if(UserService.INSTANCE.sendInfo(request.getParameter("id"))) {
 				request.setAttribute("id", rs.getString("user_id"));
 				request.setAttribute("name", rs.getString("name"));
 				getServletContext().getRequestDispatcher("/edit.jsp").forward(request, response);
 			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (ps != null)
-					ps.close();
-				if (con != null)
-					con.close();
-			} catch (SQLException ex) {
-
-			}
-		}
 	}
 }

@@ -52,9 +52,12 @@ public class UserService extends GenericSearvice {
 			throw NobuSystemException.wrap("認証実行エラー", e);
 		} finally {
 			try {
-				if (rs != null)rs.close();
-				if (ps != null)ps.close();
-				if (con != null)con.close();
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
@@ -131,8 +134,10 @@ public class UserService extends GenericSearvice {
 
 		} finally {
 			try {
-				if (ps != null)ps.close();
-				if (con != null)con.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
@@ -164,8 +169,10 @@ public class UserService extends GenericSearvice {
 
 		} finally {
 			try {
-				if (ps != null)ps.close();
-				if (con != null)con.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
@@ -183,7 +190,7 @@ public class UserService extends GenericSearvice {
 	 *            データベースのpasswordカラムへ登録するパスワード
 	 * @param userName
 	 *            データベースのnameカラムへ登録する名前
-	 * @return　データベースへの登録に成功すればtrueを返す。失敗した場合はfalseを返す。
+	 * @return データベースへの登録に成功すればtrueを返す。失敗した場合はfalseを返す。
 	 */
 	public boolean registerUserInfo(String userId, String userPass, String userName) {
 		Connection con = null;
@@ -197,18 +204,50 @@ public class UserService extends GenericSearvice {
 			ps.setString(2, userPass);
 			ps.setString(3, userName);
 
-
 			int count = ps.executeUpdate();
 			return count == 1;
-
 
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザ情報登録エラー", e);
 
 		} finally {
 			try {
-				if (ps != null)ps.close();
-				if (con != null)con.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException ex) {
+				// inogre
+			}
+		}
+	}
+
+	public boolean sendInfo(String userId) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = getConnection();
+			ps = con.prepareStatement("SELECT * FROM user_info where user_id=?");
+			ps.setString(1, userId);
+			rs = ps.executeQuery();
+			
+			
+			return rs.next();
+
+		} catch (Exception e) {
+			throw NobuSystemException.wrap("ユーザー情報取得エラー", e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException ex) {
 				// inogre
 			}
