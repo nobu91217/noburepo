@@ -65,6 +65,8 @@ public class UserServlet extends HttpServlet {
 				hasError = putErrorMessage(request, "name", "入力してください。");
 
 			if (hasError) {
+				request.setAttribute("id", id);
+				request.setAttribute("name", name);
 				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
 				return;
 			}
@@ -78,14 +80,12 @@ public class UserServlet extends HttpServlet {
 			// 入力チェック
 			boolean hasError = false;
 			if (Validation.isBlank(id))
-				hasError = putErrorMessage(request, "id", "ユーザーIDを選択してください。");
-			if (Validation.isBlank(id))
-				hasError = putErrorMessage(request, "name", "ユーザーネームを選択してください。");
+				hasError = putErrorMessage(request, "id", "ユーザーID入力をしてください。");
+			if (Validation.isBlank(name))
+				hasError = putErrorMessage(request, "name", "ユーザーネームを入力してください。");
 
 			if (hasError) {
-				request.setAttribute("user_id", id);
-				request.setAttribute("name", name);
-				getServletContext().getRequestDispatcher("/edit.jsp").forward(request, response);
+				forwardUserList(request, response);
 				return;
 			}
 
@@ -99,9 +99,9 @@ public class UserServlet extends HttpServlet {
 			// 入力チェック
 			boolean hasError = false;
 			if (Validation.isBlank(id))
-				hasError = putErrorMessage(request, "id", "ユーザーIDを選択してください。");
+				hasError = putErrorMessage(request, "id", "ユーザーIDを入力してください。");
 			if (Validation.isBlank(id))
-				hasError = putErrorMessage(request, "name", "ユーザーネームを選択してください。");
+				hasError = putErrorMessage(request, "name", "ユーザーネームを入力してください。");
 
 			if (hasError) {
 				request.setAttribute("user_id", id);
