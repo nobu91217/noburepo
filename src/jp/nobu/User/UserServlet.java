@@ -76,21 +76,22 @@ public class UserServlet extends HttpServlet {
 
 		} else if (request.getParameter("delete") != null) {
 			String id = request.getParameter("user_id");
-			String name = request.getParameter("name");
 
 			// 入力チェック
 			boolean hasError = false;
 			if (Validation.isBlank(id))
-				hasError = putErrorMessage(request, "id", "ユーザーID入力をしてください。");
-			if (Validation.isBlank(name))
-				hasError = putErrorMessage(request, "name", "ユーザーネームを入力してください。");
+				hasError = putErrorMessage(request, "delete", "削除対象の指定がありません。");
 
 			if (hasError) {
 				forwardUserList(request, response);
 				return;
 			}
 
-			UserService.INSTANCE.deleteUserByUserId(request.getParameter("user_id"));
+			boolean ret = UserService.INSTANCE.deleteUserByUserId(request.getParameter("user_id"));
+			if(ret == false) {
+				putErrorMessage(request, "delete", "削除対象が見つかりませんでした。 id:"+id);
+			}
+			
 			forwardUserList(request, response);
 			// 存在する場合の処理 成功画面に遷移
 		} else if (request.getParameter("update") != null) {
