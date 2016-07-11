@@ -222,7 +222,12 @@ public class UserService extends GenericSearvice {
 		}
 	}
 
-	public boolean sendInfo(String userId) {
+	/**
+	 * 指定のユーザーを取得する。
+	 * @param userId 取得対象となるユーザのID
+	 * @return 該当ユーザが存在すればユーザを返す。存在しなければnullを返す。
+	 */
+	public User getUser(String userId) {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -235,8 +240,11 @@ public class UserService extends GenericSearvice {
 			ps.setString(1, userId);
 			rs = ps.executeQuery();
 			
+			if(rs.next())return null;
 			
-			return rs.next();
+			return new User(rs.getString("user_id"), rs.getString("name"));
+			
+			//return rs.next();
 
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザー情報取得エラー", e);
