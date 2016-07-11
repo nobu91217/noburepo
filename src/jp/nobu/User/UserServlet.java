@@ -26,10 +26,22 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<User> users = UserService.INSTANCE.getUsers();
-		request.setAttribute("users", users);
-		getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
+	
+		if(request.getParameter("id") != null) {
+			User user = UserService.INSTANCE.getUser(request.getParameter("id"));
+			String id = user.getUserId();
+			String name = user.getUserName();
+
+			request.setAttribute("id", id);
+			request.setAttribute("name", name);
+			getServletContext().getRequestDispatcher("/edit.jsp").forward(request, response);
+		}else{
+			List<User> users = UserService.INSTANCE.getUsers();
+			request.setAttribute("users", users);
+			getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
+		}
 	}
+
 
 	private boolean putErrorMessage(HttpServletRequest request, String key, String message) {
 		request.setAttribute(key + "ErrorMsg", message);
@@ -87,11 +99,11 @@ public class UserServlet extends HttpServlet {
 			}
 
 			boolean ret = UserService.INSTANCE.deleteUserByUserId(request.getParameter("user_id"));
-			if(ret == false) {
-				putErrorMessage(request, "delete", "削除対象が見つかりませんでした。 id:"+id);
+			if (ret == false) {
+				putErrorMessage(request, "delete", "削除対象が見つかりませんでした。 id:" + id);
 
 			}
-			
+
 			forwardUserList(request, response);
 			// 存在する場合の処理 成功画面に遷移
 		} else if (request.getParameter("update") != null) {

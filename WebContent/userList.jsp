@@ -23,7 +23,7 @@
 		<td><%= user.getUserId() %></td>
 		<td><%= user.getUserName() %></td>	
 		<td>
-			<a href="SendServlet?id=<%=user.getUserId()%>">編集</a>
+			<a href="UserServlet?id=<%=user.getUserId()%>">編集</a>
 		</td>
 	</tr>
 <%

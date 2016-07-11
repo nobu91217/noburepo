@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" 
+	import="jp.nobu.domain.User" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,5 +26,6 @@
 			onclick="return confirm('本当に削除しても良いですか？')" />
 </div>
 </form>
+
 </body>
 </html>
