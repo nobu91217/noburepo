@@ -23,12 +23,12 @@ if(rs.next()) {
 <form method="POST" action="/nobuweb/UserServlet">
 <div>
 	<label for="user_id"> id </label><br/>
-		<input type="text" name="user_id" size="50" maxlength="225" value="<%=rs.getString("user_id") %>"/><br/><span class="errorMsg"><%=request.getAttribute("idErrorMsg") %>></span>
+		<input type="text" name="user_id" size="50" maxlength="225" value="<%=rs.getString("user_id") %>"/><span class="errorMsg"><%=request.getAttribute("idErrorMsg") %></span>
 </div>
 
 <div>
 	<label for="name"> 名前 </label><br/>
-		<input type="text" name="name" size="50" maxlength="16" value="<%=rs.getString("name") %>"/><span class="errorMsg"><%=request.getAttribute("nameErrorMsg") %>></span>
+		<input type="text" name="name" size="50" maxlength="16" value="<%=rs.getString("name") %>"/><span class="errorMsg"><%=request.getAttribute("nameErrorMsg") %></span>
 </div>
 <div>
 		<input type="submit" name="update" value="更新" />
