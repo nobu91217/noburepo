@@ -240,7 +240,7 @@ public class UserService extends GenericSearvice {
 			ps.setString(1, userId);
 			rs = ps.executeQuery();
 			
-			if(rs.next())return null;
+			if(!rs.next())return null;
 			
 			return new User(rs.getString("user_id"), rs.getString("name"));
 			
