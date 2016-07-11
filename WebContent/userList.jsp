@@ -6,8 +6,14 @@
 <head>
 <meta charset="UTF-8" />
 <title>登録ユーザー情報</title>
+<style>
+.errorMsg{color:red;}
+</style>
 </head>
 <body>
+
+
+<p class="errorMsg"><%=request.getAttribute("deleteErrorMsg") %></p>
 <table border="1">
 <tr>
 	<th>ユーザーID</th><th>名前</th>
