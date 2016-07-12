@@ -41,6 +41,11 @@ public class UserServlet extends HttpServlet {
 			getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
 
 		}
+		if (request.getParameter("register") != null) {
+			List<User> users = UserService.INSTANCE.getUsers();
+			request.setAttribute("users", users);
+			getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
+		}
 	}
 
 	private boolean putErrorMessage(HttpServletRequest request, String key, String message) {
@@ -85,7 +90,7 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 			UserService.INSTANCE.registerUserInfo(id, pass, name);
-			forwardUserList(request, response);
+			response.sendRedirect("/nobuweb/UserServlet");
 
 		} else if (request.getParameter("delete") != null) {
 			String id = request.getParameter("user_id");
