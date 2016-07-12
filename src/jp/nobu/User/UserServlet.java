@@ -93,7 +93,6 @@ public class UserServlet extends HttpServlet {
 					response.sendRedirect("UserServlet");			
 			}
 
-				
 		} else if (request.getParameter("delete") != null) {
 			String id = request.getParameter("user_id");
 
