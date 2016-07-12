@@ -36,6 +36,8 @@ public class LoginServlet extends HttpServlet {
 		boolean hasError = false;
 		if (Validation.isBlank(id))
 			hasError = putErrorMessage(request, "id", "入力してください。");
+		if (Validation.isEmail(id))
+			hasError = putErrorMessage(request, "id", "正しくユーザーIDを入力してください");
 		if (Validation.isBlank(pass))
 			hasError = putErrorMessage(request, "pass", "入力してください。");
 
