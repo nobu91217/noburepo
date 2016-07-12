@@ -282,7 +282,7 @@ public class UserService extends GenericSearvice {
 			return rs.next();
 
 		} catch (Exception e) {
-			throw NobuSystemException.wrap("認証実行エラー", e);
+			throw NobuSystemException.wrap("ユーザーID参照エラー", e);
 		} finally {
 			try {
 				if (rs != null)
