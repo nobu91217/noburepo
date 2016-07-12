@@ -70,8 +70,9 @@ public class UserServlet extends HttpServlet {
 			boolean hasError = false;
 			if (Validation.isBlank(id))
 				hasError = putErrorMessage(request, "id", "入力してください。");
-			if (Validation.isEmail(id))
+			else if (Validation.isEmail(id))
 				hasError = putErrorMessage(request, "id", "正しいメールアドレスを入力してください");
+			
 			if (Validation.isBlank(pass))
 				hasError = putErrorMessage(request, "password", "入力してください。");
 			if (Validation.isBlank(name))
@@ -92,8 +93,9 @@ public class UserServlet extends HttpServlet {
 			boolean hasError = false;
 			if (Validation.isBlank(id))
 				hasError = putErrorMessage(request, "delete", "削除するユーザを指定してください。");
-			if (Validation.isEmail(id))
+			else if (Validation.isEmail(id))
 				hasError = putErrorMessage(request, "delete", "指定されたユーザIDが正しくありません。");
+			
 			if (hasError) {
 				forwardUserList(request, response);
 				return;
@@ -106,8 +108,9 @@ public class UserServlet extends HttpServlet {
 			boolean hasError = false;
 			if (Validation.isBlank(id))
 				hasError = putErrorMessage(request, "id", "対象のユーザーIDを入力してください。");
-			if (Validation.isEmail(id))
+			else if (Validation.isEmail(id))
 				hasError = putErrorMessage(request, "id", "指定されたユーザIDが正しくありません。");
+			
 			if (Validation.isBlank(name))
 				hasError = putErrorMessage(request, "name", "対象のユーザーネームを入力してください。");
 			if (hasError) {
