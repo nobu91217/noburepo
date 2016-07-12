@@ -41,11 +41,7 @@ public class UserServlet extends HttpServlet {
 			getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
 
 		}
-		if (request.getParameter("register") != null) {
-			List<User> users = UserService.INSTANCE.getUsers();
-			request.setAttribute("users", users);
-			getServletContext().getRequestDispatcher("/userList.jsp").forward(request, response);
-		}
+
 	}
 
 	private boolean putErrorMessage(HttpServletRequest request, String key, String message) {
@@ -77,7 +73,7 @@ public class UserServlet extends HttpServlet {
 				hasError = putErrorMessage(request, "id", "入力してください。");
 			else if (Validation.isEmail(id))
 				hasError = putErrorMessage(request, "id", "正しいメールアドレスを入力してください");
-			
+
 			if (Validation.isBlank(pass))
 				hasError = putErrorMessage(request, "password", "入力してください。");
 			if (Validation.isBlank(name))
@@ -88,9 +84,14 @@ public class UserServlet extends HttpServlet {
 				request.setAttribute("name", request.getParameter("name"));
 				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
 				return;
+			} 
+				if(UserService.INSTANCE.authUser(id)) {
+					putErrorMessage(request,"auth","既に登録されているユーザーです。");
+					getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+				} else {
+					UserService.INSTANCE.registerUserInfo(id, pass, name);
+					response.sendRedirect("UserServlet");			
 			}
-			UserService.INSTANCE.registerUserInfo(id, pass, name);
-			response.sendRedirect("/nobuweb/UserServlet");
 
 		} else if (request.getParameter("delete") != null) {
 			String id = request.getParameter("user_id");
@@ -100,13 +101,13 @@ public class UserServlet extends HttpServlet {
 				hasError = putErrorMessage(request, "delete", "削除するユーザを指定してください。");
 			else if (Validation.isEmail(id))
 				hasError = putErrorMessage(request, "delete", "指定されたユーザIDが正しくありません。");
-			
+
 			if (hasError) {
 				forwardUserList(request, response);
 				return;
 			}
 			UserService.INSTANCE.deleteUserByUserId(request.getParameter("user_id"));
-			forwardUserList(request, response);
+			response.sendRedirect("UserServlet");
 		} else if (request.getParameter("update") != null) {
 			String id = request.getParameter("user_id");
 			String name = request.getParameter("name");
@@ -115,7 +116,7 @@ public class UserServlet extends HttpServlet {
 				hasError = putErrorMessage(request, "id", "対象のユーザーIDを入力してください。");
 			else if (Validation.isEmail(id))
 				hasError = putErrorMessage(request, "id", "指定されたユーザIDが正しくありません。");
-			
+
 			if (Validation.isBlank(name))
 				hasError = putErrorMessage(request, "name", "対象のユーザーネームを入力してください。");
 			if (hasError) {
@@ -125,7 +126,7 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 			UserService.INSTANCE.updateUserName(request.getParameter("user_id"), name);
-			forwardUserList(request, response);
+			response.sendRedirect("UserServlet");
 		}
 
 	}

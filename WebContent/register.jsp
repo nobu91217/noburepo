@@ -9,6 +9,7 @@
 .errorMsg{color:red;}
 </style>
 <body>
+<p class="errorMsg"><%=request.getAttribute("authErrorMsg") %></p>
 <form method="POST" action="/nobuweb/UserServlet">
 <div>
 	<label for="id"> id </label><br/>

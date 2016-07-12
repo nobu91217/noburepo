@@ -261,4 +261,40 @@ public class UserService extends GenericSearvice {
 			}
 		}
 	}
+	
+	/**
+	 * ユーザIDをデータベースから参照する。
+	 * @param userId 参照対象となるユーザのID
+	 * @return ユーザが存在すればtrueを返す。
+	 */
+	public boolean authUser(String userId) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = getConnection();
+			ps = con.prepareStatement("SELECT * FROM user_info where user_id = ? ");
+			ps.setString(1, userId);
+			rs = ps.executeQuery();
+			return rs.next();
+
+		} catch (Exception e) {
+			throw NobuSystemException.wrap("認証実行エラー", e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException ex) {
+				// inogre
+			}
+		}
+	}
+
 }
