@@ -2,7 +2,6 @@ package jp.nobu.service;
 
 import java.sql.Connection;
 
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -265,8 +264,15 @@ public class UserService extends GenericSearvice {
 			}
 		}
 	}
-	
-	public boolean registerLog(String date) {
+
+	/**
+	 * ログを登録する。
+	 * 
+	 * @param dateTime
+	 *            データベースのdateカラムを登録する日時
+	 * @return データベースへの登録に成功すればtrueを返す。失敗した場合はfalseを返す。
+	 */
+	public boolean registerLog(String dateTime) {
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -274,7 +280,7 @@ public class UserService extends GenericSearvice {
 
 			con = getConnection();
 			ps = con.prepareStatement("INSERT INTO log(date,process) VALUES(?,?)");
-			ps.setString(1, date);
+			ps.setString(1, dateTime);
 			ps.setString(2, "登録処理");
 
 			int count = ps.executeUpdate();
