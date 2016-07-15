@@ -26,35 +26,37 @@ public class LoginServlet extends HttpServlet {
 		return true;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String id = request.getParameter("id");
-		String pass = request.getParameter("pass");
-
-		// 入力チェック
-		boolean hasError = false;
-		if (Validation.isBlank(id))
-			hasError = putErrorMessage(request, "id", "入力してください。");
-		else if (Validation.isEmail(id))
-			hasError = putErrorMessage(request, "id", "正しくユーザーIDを入力してください");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if (Validation.isBlank(pass))
-			hasError = putErrorMessage(request, "pass", "入力してください。");
+			// TODO Auto-generated method stub
+			String id = request.getParameter("id");
+			String pass = request.getParameter("pass");
+			
+			
+			// 入力チェック
+			boolean hasError = false;
+			if (Validation.isBlank(id))
+				hasError = putErrorMessage(request, "id", "入力してください。");
+			else if (Validation.isEmail(id))
+				hasError = putErrorMessage(request, "id", "正しくユーザーIDを入力してください");
 
-		if (hasError) {
-			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-			return;
-		} 
-		
-		if (UserService.INSTANCE.login(request.getParameter("id"), request.getParameter("pass"))) {
-			getServletContext().getRequestDispatcher("/menu.jsp").forward(request, response);
-			// 存在する場合の処理 成功画面に遷移
-		} else {
-			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-			// 存在しない場合の処理 ログイン画面に遷移
+			if (Validation.isBlank(pass))
+				hasError = putErrorMessage(request, "pass", "入力してください。");
+
+			if (hasError) {
+				getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+				return;
+			}
+
+			if (UserService.INSTANCE.login(request.getParameter("id"), request.getParameter("pass"))) {
+				getServletContext().getRequestDispatcher("/menu.jsp").forward(request, response);
+				// 存在する場合の処理 成功画面に遷移
+			} else {
+				getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+				// 存在しない場合の処理 ログイン画面に遷移
+			}
+
+	
 		}
-
 	}
 
-}

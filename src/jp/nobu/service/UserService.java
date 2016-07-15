@@ -2,6 +2,7 @@ package jp.nobu.service;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -224,7 +225,9 @@ public class UserService extends GenericSearvice {
 
 	/**
 	 * 指定のユーザーを取得する。
-	 * @param userId 取得対象となるユーザのID
+	 * 
+	 * @param userId
+	 *            取得対象となるユーザのID
 	 * @return 該当ユーザが存在すればユーザを返す。存在しなければnullを返す。
 	 */
 	public User getUser(String userId) {
@@ -239,12 +242,13 @@ public class UserService extends GenericSearvice {
 			ps = con.prepareStatement("SELECT * FROM user_info where user_id=?");
 			ps.setString(1, userId);
 			rs = ps.executeQuery();
-			
-			if(!rs.next())return null;
-			
+
+			if (!rs.next())
+				return null;
+
 			return new User(rs.getString("user_id"), rs.getString("name"));
-			
-			//return rs.next();
+
+			// return rs.next();
 
 		} catch (Exception e) {
 			throw NobuSystemException.wrap("ユーザー情報取得エラー", e);
@@ -262,31 +266,25 @@ public class UserService extends GenericSearvice {
 		}
 	}
 	
-	/**
-	 * ユーザIDをデータベースから参照する。
-	 * @param userId 参照対象となるユーザのID
-	 * @return ユーザが存在すればtrueを返す。
-	 */
-	public boolean authUser(String userId) {
-
+	public boolean registerLog(String date) {
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
 
 		try {
 
 			con = getConnection();
-			ps = con.prepareStatement("SELECT * FROM user_info where user_id = ? ");
-			ps.setString(1, userId);
-			rs = ps.executeQuery();
-			return rs.next();
+			ps = con.prepareStatement("INSERT INTO log(date,process) VALUES(?,?)");
+			ps.setString(1, date);
+			ps.setString(2, "登録処理");
+
+			int count = ps.executeUpdate();
+			return count == 1;
 
 		} catch (Exception e) {
-			throw NobuSystemException.wrap("ユーザーID参照エラー", e);
+			throw NobuSystemException.wrap("", e);
+
 		} finally {
 			try {
-				if (rs != null)
-					rs.close();
 				if (ps != null)
 					ps.close();
 				if (con != null)
