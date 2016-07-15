@@ -191,29 +191,58 @@ public class UserService extends GenericSearvice {
 	 * @param userName
 	 *            データベースのnameカラムへ登録する名前
 	 * @return データベースへの登録に成功すればtrueを返す。失敗した場合はfalseを返す。
+	 * @throws SQLException
+	 * 
 	 */
-	public boolean registerUserInfo(String userId, String userPass, String userName) {
+	public boolean registerUserAndLog(String userId, String userPass, String userName, String dateTime,
+			String process) {
 		Connection con = null;
-		PreparedStatement ps = null;
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
 
 		try {
 
 			con = getConnection();
-			ps = con.prepareStatement("INSERT INTO user_info(user_id,password,name) VALUES(?,?,?)");
-			ps.setString(1, userName);
-			ps.setString(2, userPass);
-			ps.setString(3, userName);
+			con.setAutoCommit(false);
+			ps1 = con.prepareStatement("INSERT INTO user_info(user_id,password,name) VALUES(?,?,?)");
+			ps1.setString(1, userName);
+			ps1.setString(2, userPass);
+			ps1.setString(3, userName);
+			if(ps1.executeUpdate() !=1) {
+				return false;
+			}
+			
+			if(true) throw new SQLException();
 
-			int count = ps.executeUpdate();
-			return count == 1;
+			ps2 = con.prepareStatement("INSERT INTO log(date,process) VALUES(?,?)");
+			ps2.setString(1, dateTime);
+			ps2.setString(2, process);
 
-		} catch (Exception e) {
+			if(ps2.executeUpdate() !=1) {
+				con.rollback();
+				return false;
+			}
+			
+			con.commit();
+			
+		
+
+			
+
+		} catch (SQLException e) {
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+
+			}
 			throw NobuSystemException.wrap("ユーザ情報登録エラー", e);
 
 		} finally {
 			try {
-				if (ps != null)
-					ps.close();
+				if (ps1 != null)
+					ps1.close();
+				if (ps2 != null)
+					ps2.close();
 				if (con != null)
 					con.close();
 			} catch (SQLException ex) {
@@ -253,8 +282,6 @@ public class UserService extends GenericSearvice {
 			throw NobuSystemException.wrap("ユーザー情報取得エラー", e);
 		} finally {
 			try {
-				if (rs != null)
-					rs.close();
 				if (ps != null)
 					ps.close();
 				if (con != null)

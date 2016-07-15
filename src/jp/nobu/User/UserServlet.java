@@ -97,8 +97,7 @@ public class UserServlet extends HttpServlet {
 				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
 				return;
 			}
-			UserService.INSTANCE.registerUserInfo(id, pass, name);
-			UserService.INSTANCE.registerLog(datetime, "登録処理");
+			UserService.INSTANCE.registerUserAndLog(id, pass, name, datetime, "登録処理");
 			response.sendRedirect("UserServlet");
 
 		} else if (request.getParameter("delete") != null) {
