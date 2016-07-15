@@ -74,7 +74,6 @@ public class UserServlet extends HttpServlet {
 
 		// TODO Auto-generated method stub
 		if (request.getParameter("register") != null) {
-
 			String id = request.getParameter("id");
 			String pass = request.getParameter("pass");
 			String name = request.getParameter("name");
@@ -84,8 +83,8 @@ public class UserServlet extends HttpServlet {
 				hasError = putErrorMessage(request, "id", "入力してください。");
 			else if (Validation.isEmail(id))
 				hasError = putErrorMessage(request, "id", "正しいメールアドレスを入力してください");
-			else if (UserService.INSTANCE.getUser(id) == null)
-				hasError = putErrorMessage(request, "auth", "既に登録されているユーザーです。");
+			// else if (UserService.INSTANCE.getUser(id) == null)
+			// hasError = putErrorMessage(request, "auth", "既に登録されているユーザーです。");
 
 			if (Validation.isBlank(pass))
 				hasError = putErrorMessage(request, "password", "入力してください。");
@@ -99,7 +98,7 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 			UserService.INSTANCE.registerUserInfo(id, pass, name);
-			UserService.INSTANCE.registerLog(datetime);
+			UserService.INSTANCE.registerLog(datetime, "登録処理");
 			response.sendRedirect("UserServlet");
 
 		} else if (request.getParameter("delete") != null) {

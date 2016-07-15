@@ -266,13 +266,15 @@ public class UserService extends GenericSearvice {
 	}
 
 	/**
-	 * ログを登録する。
+	 * 処理のログを登録する。
 	 * 
 	 * @param dateTime
-	 *            データベースのdateカラムを登録する日時
+	 *            データベースのdateカラムへ登録する日時
+	 * @param process
+	 * 			  データベースのprocessカラムへ登録する処理内容
 	 * @return データベースへの登録に成功すればtrueを返す。失敗した場合はfalseを返す。
 	 */
-	public boolean registerLog(String dateTime) {
+	public boolean registerLog(String dateTime, String process) {
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -281,7 +283,7 @@ public class UserService extends GenericSearvice {
 			con = getConnection();
 			ps = con.prepareStatement("INSERT INTO log(date,process) VALUES(?,?)");
 			ps.setString(1, dateTime);
-			ps.setString(2, "登録処理");
+			ps.setString(2, process);
 
 			int count = ps.executeUpdate();
 			return count == 1;
