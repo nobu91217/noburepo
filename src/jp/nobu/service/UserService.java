@@ -200,7 +200,7 @@ public class UserService extends GenericSearvice {
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
 		
-		LOG.debug("#registerUserAndLog登録開始*************************");
+		LOG.info("#registerUserAndLog登録開始*************************");
 
 		try {
 			
@@ -231,7 +231,7 @@ public class UserService extends GenericSearvice {
 
 			if(ps2.executeUpdate() !=1) {
 				LOG.debug("ログ登録失敗");
-				LOG.debug("○ロールバック");
+				LOG.warn("○ロールバック");
 				con.rollback();
 				return false;
 			}
@@ -246,15 +246,15 @@ public class UserService extends GenericSearvice {
 
 		} catch (SQLException e) {
 			try {
-				LOG.debug("○エラー発生の為ロールバック");
+				LOG.warn("○エラー発生の為ロールバック");
 				if(con!=null)con.rollback();
 			} catch (SQLException e1) {
-
+				LOG.error("○ロールバック失敗");
 			}
 			throw NobuSystemException.wrap("ユーザ情報登録エラー", e);
 
 		} finally {
-			LOG.debug("#registerUserAndLog登録終了*************************");
+			LOG.info("#registerUserAndLog登録終了*************************");
 			try {
 				if (ps1 != null)
 					ps1.close();
