@@ -271,7 +271,7 @@ public class UserService extends GenericSearvice {
 	 * @param dateTime
 	 *            データベースのdateカラムへ登録する日時
 	 * @param process
-	 * 			  データベースのprocessカラムへ登録する処理内容
+	 *            データベースのprocessカラムへ登録する処理内容
 	 * @return データベースへの登録に成功すればtrueを返す。失敗した場合はfalseを返す。
 	 */
 	public boolean registerLog(String dateTime, String process) {

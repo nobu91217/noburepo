@@ -83,8 +83,8 @@ public class UserServlet extends HttpServlet {
 				hasError = putErrorMessage(request, "id", "入力してください。");
 			else if (Validation.isEmail(id))
 				hasError = putErrorMessage(request, "id", "正しいメールアドレスを入力してください");
-			// else if (UserService.INSTANCE.getUser(id) == null)
-			// hasError = putErrorMessage(request, "auth", "既に登録されているユーザーです。");
+			else if (UserService.INSTANCE.getUser(id) != null)
+				hasError = putErrorMessage(request, "auth", "既に登録されているユーザーです。");
 
 			if (Validation.isBlank(pass))
 				hasError = putErrorMessage(request, "password", "入力してください。");
