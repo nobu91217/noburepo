@@ -281,7 +281,7 @@ public class UserService extends GenericSearvice {
 			return count == 1;
 
 		} catch (Exception e) {
-			throw NobuSystemException.wrap("", e);
+			throw NobuSystemException.wrap("ログ登録エラー", e);
 
 		} finally {
 			try {
