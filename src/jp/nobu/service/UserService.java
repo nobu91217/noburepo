@@ -199,45 +199,62 @@ public class UserService extends GenericSearvice {
 		Connection con = null;
 		PreparedStatement ps1 = null;
 		PreparedStatement ps2 = null;
+		
+		LOG.debug("#registerUserAndLog登録開始*************************");
 
 		try {
+			
+			LOG.debug("ユーザ登録開始");
 
 			con = getConnection();
 			con.setAutoCommit(false);
+			
 			ps1 = con.prepareStatement("INSERT INTO user_info(user_id,password,name) VALUES(?,?,?)");
 			ps1.setString(1, userName);
 			ps1.setString(2, userPass);
 			ps1.setString(3, userName);
+			
 			if(ps1.executeUpdate() !=1) {
+				LOG.debug("ユーザ登録失敗");
 				return false;
 			}
 			
+			LOG.debug("ユーザ登録成功");
+			
+			
 			if(true) throw new SQLException();
 
+			LOG.debug("ログ登録開始");
 			ps2 = con.prepareStatement("INSERT INTO log(date,process) VALUES(?,?)");
 			ps2.setString(1, dateTime);
 			ps2.setString(2, process);
 
 			if(ps2.executeUpdate() !=1) {
+				LOG.debug("ログ登録失敗");
+				LOG.debug("○ロールバック");
 				con.rollback();
 				return false;
 			}
 			
+			LOG.debug("ログ登録成功");
+			
 			con.commit();
 			
-		
-
+			LOG.debug("○コミット");
 			
+			return true;
 
 		} catch (SQLException e) {
 			try {
-				con.rollback();
+				LOG.debug("○エラー発生の為ロールバック");
+				if(con!=null)con.rollback();
 			} catch (SQLException e1) {
 
 			}
 			throw NobuSystemException.wrap("ユーザ情報登録エラー", e);
 
 		} finally {
+			LOG.debug("#registerUserAndLog登録終了*************************");
 			try {
 				if (ps1 != null)
 					ps1.close();
